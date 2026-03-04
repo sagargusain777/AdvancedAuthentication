@@ -93,3 +93,46 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 </body>
 </html>
 `;
+export const WELCOME_EMAIL_TEMPLATE = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Our App!</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
+    <h1 style="color: white; margin: 0;">Welcome Aboard! 🎉</h1>
+  </div>
+  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <p>Hello, <strong>{userName}</strong>!</p>
+    <p>Welcome to <strong>Your App</strong> — we're thrilled to have you with us. Your account is all set and ready to go!</p>
+
+    <div style="background-color: #ffffff; border-left: 4px solid #4CAF50; padding: 15px 20px; margin: 25px 0; border-radius: 0 5px 5px 0;">
+      <h2 style="margin: 0 0 10px; color: #4CAF50; font-size: 1em; text-transform: uppercase; letter-spacing: 1px;">Here's what you can do next</h2>
+      <ul style="margin: 0; padding-left: 20px;">
+        <li style="margin-bottom: 8px;">✅ Complete your profile</li>
+        <li style="margin-bottom: 8px;">✅ Explore the dashboard</li>
+        <li style="margin-bottom: 8px;">✅ Check out our getting started guide</li>
+      </ul>
+    </div>
+
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="{dashboardUrl}" style="background: linear-gradient(to right, #4CAF50, #45a049); color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 1em;">Get Started</a>
+    </div>
+
+    <p>If you have any questions, feel free to reply to this email or visit our <a href="{supportUrl}" style="color: #4CAF50;">support center</a>.</p>
+    <p>We're excited to have you on board!</p>
+    <p>Best regards,<br>The Your App Team</p>
+  </div>
+  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
+    <p>This is an automated message, please do not reply to this email.</p>
+    <p>
+      <a href="{unsubscribeUrl}" style="color: #aaa;">Unsubscribe</a> &nbsp;|&nbsp;
+      <a href="{privacyUrl}" style="color: #aaa;">Privacy Policy</a>
+    </p>
+  </div>
+</body>
+</html>
+`;
