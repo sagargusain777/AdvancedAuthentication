@@ -78,9 +78,11 @@ export const verifyemail = async(req,res) =>{
 
 }
 export const login = async (req,res) =>{
+
     res.send("login route")
 }
 
 export const logout = async (req,res) =>{
-    res.send("logout route")
+    res.clearCookie("jwt")
+    res.status(200).json({success : true , message : "User Logged Out Successfully"})
 }
