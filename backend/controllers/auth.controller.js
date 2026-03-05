@@ -3,6 +3,7 @@ import { hashPassword } from "../utils/security.js";
 import { generateVerificationCode } from "../utils/generateverificationcode.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import { sendVerificationEmail , sendWelcomeEmail } from "../mailtrap/email.js";
+import bcrypt from "bcryptjs";
 export const signup = async (req,res) =>{
 
     const {email,password,name} = req.body;
@@ -79,7 +80,29 @@ export const verifyemail = async(req,res) =>{
 }
 export const login = async (req,res) =>{
 
-    res.send("login route")
+    try {
+        const {email , password} = req.body
+        const user  = await User.findOne({email});
+        if(!user){
+            res.status(401).json({success:false , message : "Invalid Credentials"})
+        }
+
+        const isPasswordValid = await bcrypt.compare(password,user.password)
+        if(!isPasswordValid){
+            res.status(401).json({success:false , message : "Incorrect Password"})
+        }
+
+        generateTokenAndSetCookie(res,user._id)
+        user.lastlogin = new Date();
+        await user.save()
+
+        res.status(201).json({success : true , message  : "User logged in Successfully", user : { ...user._doc,password : undefined}})
+        
+    } catch (error) {
+
+        res.status(400).json({success: false , message: error.message})
+        
+    }
 }
 
 export const logout = async (req,res) =>{
