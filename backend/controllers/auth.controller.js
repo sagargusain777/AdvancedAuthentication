@@ -127,7 +127,7 @@ export const forgotpassword = async(req , res) => {
     await user.save();
 
     //send user reset password email
-    await sendPasswordResetEmail(user.email,`${process.env.CLIENT_URL}/api/auth/forgotpassword/${resetToken}`)
+    await sendPasswordResetEmail(user.email,`${process.env.CLIENT_URL}/forgot-password/${resetToken}`)
 
     res.status(201).json({success : true , message : "Reset Password Successfully"})
     
@@ -137,4 +137,29 @@ export const forgotpassword = async(req , res) => {
 
    
 
+}
+
+export const resetpassword = async (req, res) => {
+    const { token } = req.params;
+    const { password } = req.body;
+    try {
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpiresAt: { $gt: Date.now() }
+        });
+
+        if (!user) {
+            return res.status(400).json({ success: false, message: "Invalid or expired reset token" });
+        }
+
+        const hashedPassword = await hashPassword(password);
+        user.password = hashedPassword;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpiresAt = undefined;
+        await user.save();
+
+        res.status(200).json({ success: true, message: "Password reset successfully" });
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
+    }
 }
